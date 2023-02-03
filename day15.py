@@ -1,37 +1,38 @@
-## 함수 선언 부분 ##
-def print_poly(p_x):
-    term = len(p_x) - 1  # 최고차항 숫자 = 배열길이-1
-    poly_str = "P(x) = "
-
-    for i in range(len(px)):
-        coef = p_x[i]  # 계수
-
-        if coef >= 0:
-            poly_str += "+"
-        poly_str += str(coef) + "x^" + str(term) + " "
-        term -= 1
-
-    return poly_str
+## 클래스와 함수 선언 부분 ##
+class Node() :
+	def __init__ (self):
+	    self.data = None
+	    self.link = None
 
 
-def calc_poly(x_value, p_x):
-    ret_value = 0
-    term = len(p_x) - 1  # 최고차항 숫자 = 배열길이-1
+def print_nodes(start):
+    current = start
+    if current == None :
+        return
+    print(current.data, end = ' ')
+    while current.link != None:
+        current = current.link
+        print(current.data, end = ' ')
+    print()
 
-    for i in range(len(px)):
-        coef = p_x[i]  # 계수
-        ret_value += coef * x_value ** term
-        term -= 1
-
-    return ret_value
 
 ## 전역 변수 선언 부분 ##
-px = [7, -4, 0, 5]  # = 7x^3 -4x^2 +0x^1 +5x^0
+memory = []
+head, current, pre = None, None, None
+dataArray = ["다현", "정연", "쯔위", "사나", "지효"]
 
 ## 메인 코드 부분 ##
 if __name__ == "__main__":
-    pStr = print_poly(px)
-    print(pStr)
+    node = Node()   # 첫 번째 노드
+    node.data = dataArray[0]
+    head = node
+    memory.append(node)
 
-    x_value = int(input("X 값-->"))
-    print(calc_poly(x_value, px))
+    for data in dataArray[1:] :	# 두 번째 이후 노드
+        pre = node
+        node = Node()
+        node.data = data
+        pre.link = node
+        memory.append(node)
+
+print_nodes(head)
