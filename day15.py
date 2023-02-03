@@ -27,17 +27,20 @@ def delete_data(idx):
     len_pokemons = len(pokemons)
     pokemons[idx] = None
 
-    for i in range(idx, len_pokemons):
-        # pokemons[i - 1] = pokemons[i]
-        # pokemons[i] = None
+    for i in range(len_pokemons - idx):
+        pokemons.pop()  # 반복하면서 제거 수행
 
-        del (pokemons[idx])
+#    for i in range(idx, len_pokemons):
+#        # pokemons[i - 1] = pokemons[i]
+#        # pokemons[i] = None
+#
+#        del (pokemons[idx])
 
 
 # insert_data(1, "치코리타")
 # print(pokemons)
 
-delete_data(1)
+delete_data(2)
 print(pokemons)
 
 
