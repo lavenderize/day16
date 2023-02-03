@@ -1,12 +1,12 @@
 pokemons = ["피카츄", "라이츄", "파이리", "꼬부기", "이상해씨"]
 
 
-def add_data(pokemon) :
+def add_data(pokemons) :
     pokemons.append(None)
 
 
-def insert_data(idx, pokemon):
-    if idx < 0 or idx > len(pokemon):
+def insert_data(idx, pokemons):
+    if idx < 0 or idx > len(pokemons):
         print("Out of range!")
         return
 
@@ -16,10 +16,28 @@ def insert_data(idx, pokemon):
         pokemons[i] = pokemons[i - 1]
         pokemons[i - 1] = None
 
-    pokemons[idx] = pokemon
+    pokemons[idx] = pokemons
 
-insert_data(1, "치코리타")
-insert_data(3, "잠만보")
+
+def delete_data(idx):
+    if idx < 0 or idx > len(pokemons):
+        print("Out of range!")
+        return
+
+    len_pokemons = len(pokemons)
+    pokemons[idx] = None
+
+    for i in range(idx, len_pokemons):
+        # pokemons[i - 1] = pokemons[i]
+        # pokemons[i] = None
+
+        del (pokemons[idx])
+
+
+# insert_data(1, "치코리타")
+# print(pokemons)
+
+delete_data(1)
 print(pokemons)
 
 
