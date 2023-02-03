@@ -1,47 +1,37 @@
-pokemons = ["피카츄", "라이츄", "파이리", "꼬부기", "이상해씨"]
+## 함수 선언 부분 ##
+def print_poly(p_x):
+    term = len(p_x) - 1  # 최고차항 숫자 = 배열길이-1
+    poly_str = "P(x) = "
+
+    for i in range(len(px)):
+        coef = p_x[i]  # 계수
+
+        if coef >= 0:
+            poly_str += "+"
+        poly_str += str(coef) + "x^" + str(term) + " "
+        term -= 1
+
+    return poly_str
 
 
-def add_data(pokemons) :
-    pokemons.append(None)
+def calc_poly(x_value, p_x):
+    ret_value = 0
+    term = len(p_x) - 1  # 최고차항 숫자 = 배열길이-1
 
+    for i in range(len(px)):
+        coef = p_x[i]  # 계수
+        ret_value += coef * x_value ** term
+        term -= 1
 
-def insert_data(idx, pokemons):
-    if idx < 0 or idx > len(pokemons):
-        print("Out of range!")
-        return
+    return ret_value
 
-    pokemons.append(None)
+## 전역 변수 선언 부분 ##
+px = [7, -4, 0, 5]  # = 7x^3 -4x^2 +0x^1 +5x^0
 
-    for i in range(len(pokemons) - 1, idx, -1):
-        pokemons[i] = pokemons[i - 1]
-        pokemons[i - 1] = None
+## 메인 코드 부분 ##
+if __name__ == "__main__":
+    pStr = print_poly(px)
+    print(pStr)
 
-    pokemons[idx] = pokemons
-
-
-def delete_data(idx):
-    if idx < 0 or idx > len(pokemons):
-        print("Out of range!")
-        return
-
-    len_pokemons = len(pokemons)
-    pokemons[idx] = None
-
-    for i in range(len_pokemons - idx):
-        pokemons.pop()  # 반복하면서 제거 수행
-
-#    for i in range(idx, len_pokemons):
-#        # pokemons[i - 1] = pokemons[i]
-#        # pokemons[i] = None
-#
-#        del (pokemons[idx])
-
-
-# insert_data(1, "치코리타")
-# print(pokemons)
-
-delete_data(2)
-print(pokemons)
-
-
-
+    x_value = int(input("X 값-->"))
+    print(calc_poly(x_value, px))
