@@ -1,47 +1,152 @@
+# def find_and_insert_data(pokemon, k_count) :
+# 	findPos = -1
+# 	for i in range(len(pokemons)):
+# 		pair = pokemons[i]
+# 		if k_count <= pair[1]:
+# 			findPos = i
+# 			break
+# 	if findPos == -1:
+# 		findPos = len(pokemons)
+#
+# 	insert_data(findPos, [pokemon, k_count])
+#
+#
+# def insert_data(position, pokemon):
+# 	if position < 0 or position > len(pokemons):
+# 		print("데이터를 삽입할 범위를 벗어났습니다.")
+# 		return
+#
+# 	pokemons.append(None)
+# 	kLen = len(pokemons)
+#
+# 	for i in range(kLen - 1, position, -1):
+# 		pokemons[i] = pokemons[i - 1]
+# 		pokemons[i - 1] = None
+#
+# 	pokemons[position] = pokemon
+#
+#
+#
+# pokemons = [['피카츄', 300], ['꼬부기', 500], ['어니부기', 700], ['거북왕', 1000]]
+#
+# ## 메인 코드 부분 ##
+# if __name__ == "__main__":
+#
+# 	while True:
+# 		pokemon = input("새로운 몬스터 : ")
+# 		hp = int(input("체력 : "))
+# 		find_and_insert_data(pokemon, hp)
+# 		print(pokemons)
 
-def print_poly(px, tx):
-    """
-    다항식을 포맷에 맞게 출력하는 함수
-    :param px: 계수를 원소로 가지고 있는 list
-    :param tx: 차수를 원소로 가지고 있는 list
-    :return: 다항식 문자열
-    """
-    poly_str = "P(x) = "
+class Node:
+	def __init__(self):
+		self.data = None
+		self.link = None
 
-    for i in range(len(px)):
-        term = tx[i]
-        coef = px[i]
-        if coef >= 0:
-            poly_str = poly_str + "+"
-
-        poly_str = poly_str + f'{coef}x^{term} '
-
-    return poly_str
+	# def __repr__(self):
+	# 	return f'포켓몬스터!'
 
 
-def calc_poly(x_val, px, tx):
-    """
-    다항식의 산술연산을 하는 함수
-    :param x_val: x값 integer
-    :param px: 계수를 원소로 가지고 있는 list
-    :param tx: 차수를 원소로 가지고 있는 list
-    :return: 다항식 계산 결과 값 integer
-    """
-    return_val = 0
-
-    for i in range(len(px)):
-        term = tx[i]
-        coef = px[i]
-        return_val = return_val + coef * x_val ** term
-
-    return return_val
+def print_nodes(start):
+    current = start
+    if current == None :
+        return
+    print(current.data, end=' ')
+    while current.link is not None:
+        current = current.link  # 다음 노드로 이동
+        print(current.data, end=' ')
+    print()
 
 
-px = [3, -4, 5]
-tx = [300, 20, 0]
+def insert_nodes(find_data, insert_data):
+    global memory, head, current, pre
+
+    if head.data == find_data:  # 첫 번째 노드 삽입
+        node = Node()
+        node.data = insert_data
+        node.link = head
+        head = node
+        return
+
+    current = head
+    while current.link is not None:  # 중간 노드 삽입
+        pre = current
+        current = current.link
+        if current.data == find_data:
+            node = Node()
+            node.data = insert_data
+            node.link = current
+            pre.link = node
+            return
+
+
+def delete_nodes(delete_data):
+    global memory, head, current, pre
+
+    if head.data == delete_data:
+        current = head
+        head = head.link
+        print("#첫 노드가 삭제됨#")
+        del current
+        return
+
+    current = head
+    while current.link is not None:
+        pre = current
+        current = current.link
+        if current.data == delete_data:
+            pre.link = current.link
+            print("#중간 노드가 삭제됨#")
+            del current
+            return
+
+# 삭제할 데이터를 찾지 못한 경우
+    print("#삭제할 노드를 찾지 못함#")
+
+
+def find_nodes(find_data):
+    global memory, head, current, pre
+
+    current = head
+    if current.data == find_data:
+        return current
+
+    while current.link is not None:
+        current = current.link
+        if current.data == find_data:
+            return current
+
+    return Node("nameless")
+
+
+memory = []
+head, current, pre = None, None, None
+data_Array = ["피카츄", "라이츄", "꼬부기", "파이리", "이상해"]
+
 
 if __name__ == "__main__":
-    print(print_poly(px, tx))
+    node = Node()
+    node.data = data_Array[0]
+    head = node
+    memory.append(node)
 
-    x_value = int(input("X 값 : "))
-    print(calc_poly(x_value, px, tx))
+    for data in data_Array[1:]:
+        pre = node
+        node = Node()
+        node.data = data
+        pre.link = node
+#        memory.append(node)
+
+    print_nodes(head)
+    insert_nodes("피카츄", "잠만보")
+    print_nodes(head)
+    insert_nodes("파이리", "어니부기")
+    print_nodes(head)
+
+    delete_nodes("잠만보")
+    print_nodes(head)
+    delete_nodes("꼬부기")
+    print_nodes(head)
+    delete_nodes("고창석")
+    print_nodes(head)
+    print(find_nodes("파이리").data)
